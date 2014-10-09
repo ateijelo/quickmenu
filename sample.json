@@ -1,0 +1,11 @@
+{
+    "icon": "icon.png",
+    "menu": [
+        { "icon": "poweroff.png", "label": "Power Off", "action": "kdesudo poweroff" },
+        { "icon": "restart.png", "label": "Restart", "action": "kdesudo restart"},
+        { "icon": "proxies.png", "label": "Proxies", "menu": [
+        	{ "label": "proxy.matcom.uh.cu:3128", "action": "setproxy matcom" },
+        	{ "label": "vps", "action": "setproxy vps" }
+        ]}
+    ]
+}
