@@ -17,6 +17,14 @@ MenuBuilder::MenuBuilder(QString jsonPath, QObject *parent) :
     if (!f.open(QIODevice::ReadOnly))
         qDebug() << "Error opening" << jsonPath;
     QJsonDocument rootDoc = QJsonDocument::fromJson(f.readAll(),&parseError);
+    if (rootDoc.isNull())
+    {
+        QMessageBox::warning(nullptr,"Parse Error",QString("%1: %2: %3")
+                             .arg(jsonPath)
+                             .arg(parseError.offset)
+                             .arg(parseError.errorString()),QMessageBox::Ok);
+        exit(1);
+    }
 
     auto rootObj = rootDoc.object();
     addMenu(&rootMenu, rootObj);
