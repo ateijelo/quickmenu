@@ -1,22 +1,24 @@
 {
   "comments" : "
-  	 Just like any other key that QuickMenu is not looking for, this comment
-  	 will be simply ignored. Json doesn't include comments in its syntax, so,
-  	 I did this.
+     Just like any other key that QuickMenu is not looking for, this comment
+     will be simply ignored. Json doesn't include comments in its syntax, so,
+     I did this.
 
-  	 To describe a menu, just mimic the examples below. A menu is an array of
-  	 entries. An entry is an object that has an optional icons and label.
+     To describe a menu, just mimic the examples below. A menu is an array of
+     entries. An entry is an object that has an optional icons and label.
 
-  	 An ampersand (&) in a label with underline the next letter in the
-  	 menu entry and work as a keyboard shortcut.
+     An ampersand (&) in a label with underline the next letter in the
+     menu entry and work as a keyboard shortcut.
 
-  	 Omitting the label is possible, the entry will look empty, but
-  	 its action will trigger anyway. An entry without an action key will
-  	 be skipped.
+     Omitting the label is possible, the entry will look empty, but
+     its action will trigger anyway. An entry without an action key will
+     be skipped.
 
-  	 The 'action' key is a string that will be passed to 'sh -c'.
-  	 The entry can specify a 'pwd' key to have the program run in the given
-  	 working directory.
+     The 'action' key is a string that will be passed to 'sh -c'.
+     The entry can specify a 'pwd' key to have the program run in the given
+     working directory.
+
+     If the 'icon' key is ommitted in the root menu, a default will be used.
   ",
   "icon": "icon.png",
   "menu": [
