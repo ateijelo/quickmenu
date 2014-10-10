@@ -24,4 +24,5 @@ RESOURCES += \
 
 OTHER_FILES += \
     default-icon.svg \
-    sample.json
+    sample.json \
+    LICENSE
