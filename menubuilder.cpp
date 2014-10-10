@@ -5,6 +5,7 @@
 #include <QJsonArray>
 #include <QApplication>
 #include <QMessageBox>
+#include <QProcess>
 
 #include "menubuilder.h"
 
@@ -37,7 +38,12 @@ MenuBuilder::MenuBuilder(QString jsonPath, QObject *parent) :
 void MenuBuilder::actionTriggered()
 {
     QAction* a = (QAction *)sender();
-    QMessageBox::information(nullptr,"Action",a->data().toString(),QMessageBox::Ok);
+    QJsonObject entry = a->data().toJsonObject();
+    QString pwd = entry.value("pwd").toString();
+    QStringList args;
+    args << "-c";
+    args << entry.value("action").toString();
+    QProcess::startDetached("sh",args,pwd);
 }
 
 void MenuBuilder::addMenu(QMenu *menu, const QJsonObject &obj)
@@ -61,7 +67,7 @@ void MenuBuilder::addMenu(QMenu *menu, const QJsonObject &obj)
         else if (entry.contains("action"))
         {
             QAction *action = menu->addAction(loadIcon(entry),label,this,SLOT(actionTriggered()));
-            action->setData(QVariant(entry.value("action").toString()));
+            action->setData(QVariant(entry));
         }
     }
 }
