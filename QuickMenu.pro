@@ -23,4 +23,5 @@ RESOURCES += \
     resources.qrc
 
 OTHER_FILES += \
-    default-icon.svg
+    default-icon.svg \
+    sample.json

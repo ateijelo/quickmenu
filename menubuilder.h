@@ -28,6 +28,7 @@ private:
 
     QSystemTrayIcon icon;
     QMenu rootMenu;
+    QString jsonPath;
 
 };
 

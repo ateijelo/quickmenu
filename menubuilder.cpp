@@ -6,11 +6,13 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QProcess>
+#include <QFileInfo>
+#include <QDir>
 
 #include "menubuilder.h"
 
 MenuBuilder::MenuBuilder(QString jsonPath, QObject *parent) :
-    QObject(parent)
+    QObject(parent), jsonPath(jsonPath)
 {
     QJsonParseError parseError;
     QFile f(jsonPath);
@@ -91,7 +93,8 @@ void MenuBuilder::addMenu(QMenu *menu, const QJsonObject &obj)
 
 QIcon MenuBuilder::loadIcon(const QJsonObject &obj)
 {
-    auto iconPath = obj.value("icon").toString();
+    QFileInfo fi(jsonPath);
+    auto iconPath = fi.dir().absoluteFilePath(obj.value("icon").toString());
     if (QFile::exists(iconPath))
         return QIcon(iconPath);
     return QIcon();
