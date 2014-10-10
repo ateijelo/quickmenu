@@ -18,3 +18,9 @@ SOURCES += main.cpp \
 
 HEADERS  += \
     menubuilder.h
+
+RESOURCES += \
+    resources.qrc
+
+OTHER_FILES += \
+    default-icon.svg

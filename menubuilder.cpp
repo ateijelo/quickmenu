@@ -15,13 +15,22 @@ MenuBuilder::MenuBuilder(QString jsonPath, QObject *parent) :
     QJsonParseError parseError;
     QFile f(jsonPath);
     if (!f.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::warning(nullptr,"Error",QString("Error opening %1: %2")
+                             .arg(jsonPath)
+                             .arg(f.errorString()),QMessageBox::Ok);
         qDebug() << "Error opening" << jsonPath;
-    QJsonDocument rootDoc = QJsonDocument::fromJson(f.readAll(),&parseError);
+        exit(1);
+    }
+    QByteArray data = f.readAll();
+    QJsonDocument rootDoc = QJsonDocument::fromJson(data,&parseError);
     if (rootDoc.isNull())
     {
-        QMessageBox::warning(nullptr,"Parse Error",QString("%1: %2: %3")
+        std::pair<int,int> p = position(data, parseError);
+        QMessageBox::warning(nullptr,"Parse Error",QString("%1: %2:%3: %4")
                              .arg(jsonPath)
-                             .arg(parseError.offset)
+                             .arg(p.first)
+                             .arg(p.second)
                              .arg(parseError.errorString()),QMessageBox::Ok);
         exit(1);
     }
@@ -33,7 +42,7 @@ MenuBuilder::MenuBuilder(QString jsonPath, QObject *parent) :
 
     if (rootMenu.icon().isNull())
     {
-        // set a default QuickMenu icon for the root menu
+        icon.setIcon(QIcon(":/default.png"));
     }
     else
     {
@@ -86,5 +95,21 @@ QIcon MenuBuilder::loadIcon(const QJsonObject &obj)
     if (QFile::exists(iconPath))
         return QIcon(iconPath);
     return QIcon();
+}
+
+std::pair<int, int> MenuBuilder::position(const QByteArray &data, const QJsonParseError &parseError)
+{
+    int line = 1;
+    int column = 1;
+    for (int i=0; i<parseError.offset; i++)
+    {
+        if (data.at(i) == '\n')
+        {
+            line += 1;
+            column = 0;
+        }
+        column++;
+    }
+    return {line,column};
 }
 

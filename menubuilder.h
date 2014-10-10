@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QSystemTrayIcon>
 #include <QJsonObject>
+#include <QJsonParseError>
 
 class MenuBuilder : public QObject
 {
@@ -23,6 +24,7 @@ private slots:
 private:
     void addMenu(QMenu *menu, const QJsonObject& obj);
     QIcon loadIcon(const QJsonObject& obj);
+    std::pair<int, int> position(const QByteArray& data, const QJsonParseError& parseError);
 
     QSystemTrayIcon icon;
     QMenu rootMenu;
