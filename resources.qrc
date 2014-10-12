@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>default.png</file>
+        <file>default-warning.png</file>
     </qresource>
 </RCC>

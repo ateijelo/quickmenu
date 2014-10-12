@@ -34,7 +34,7 @@
     },
     {
       "icon": "proxies.png",
-      "label": "Proxies",
+      "label": "&Proxies",
       "menu": [
         {
           "label": "proxy.matcom.uh.cu:3128",

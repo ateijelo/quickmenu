@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -14,10 +14,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    menubuilder.cpp
+    quickmenu.cpp
 
 HEADERS  += \
-    menubuilder.h
+    quickmenu.h
 
 RESOURCES += \
     resources.qrc

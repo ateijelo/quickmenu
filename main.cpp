@@ -31,15 +31,64 @@ SUCH DAMAGE.
 */
 
 #include <QApplication>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
+#include <QLocalServer>
+#include <QLocalSocket>
 
-#include "menubuilder.h"
+#include "quickmenu.h"
+
+void activate(const QString& name)
+{
+    QLocalSocket s;
+    s.connectToServer(name);
+    s.waitForConnected();
+    s.readAll();
+    s.close();
+}
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setOrganizationDomain("ateijelo.com");
+    app.setOrganizationName("ateijelo");
+    app.setApplicationName("QuickMenu");
+    app.setApplicationVersion("1.0");
+
+    QCommandLineParser p;
+    p.setApplicationDescription("Easily create menus for your notification area");
+    p.addHelpOption();
+    p.addVersionOption();
+
+    p.addPositionalArgument("jsonfile","JSON file describing the menu");
+    QCommandLineOption nameOption("name","Give this menu a name to be remotely activated","name");
+    QCommandLineOption showOption("show","Remotely activate a named menu","name");
+
+    p.addOption(nameOption);
+    p.addOption(showOption);
+
+    p.process(app);
+
+    if (p.isSet("show"))
+    {
+        activate(p.value("show"));
+        return 0;
+    }
 
     app.setQuitOnLastWindowClosed(false);
-    MenuBuilder b(app.arguments().at(1));
+
+    if (p.positionalArguments().length() < 1)
+    {
+        p.showHelp();
+        return 0;
+    }
+    QuickMenu b(p.positionalArguments().at(0));
+    b.show();
+
+    if (p.isSet(nameOption))
+    {
+        b.listenOn(p.value("name"));
+    }
 
     return app.exec();
 }
