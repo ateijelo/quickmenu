@@ -52,7 +52,11 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       id="g3035">
+       id="g3035"
+       inkscape:export-filename="/home/ateijelo/programs/qt/QuickMenu/default-warning.png"
+       inkscape:export-xdpi="204.56"
+       inkscape:export-ydpi="204.56"
+       transform="matrix(0.98224306,0,0,0.98224306,2.0358745,7.6329219)">
       <rect
          inkscape:export-filename="/home/ateijelo/programs/qt/QuickMenu/default-warning.png"
          inkscape:export-ydpi="204.56"
@@ -62,7 +66,7 @@
          height="112.632"
          width="112.632"
          id="rect3773"
-         style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+         style="fill:none;stroke:none" />
       <g
          transform="translate(-1.5195656,1.6368942)"
          id="g3775">
@@ -79,11 +83,11 @@
            inkscape:connector-curvature="0" />
       </g>
       <g
-         transform="translate(118.94547,59.599)"
+         transform="matrix(1.2036442,0,0,1.2036442,103.91379,-30.491867)"
          id="g3030">
         <path
            sodipodi:type="star"
-           style="fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           style="fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.53748894;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            id="path3024"
            sodipodi:sides="3"
            sodipodi:cx="14.647212"

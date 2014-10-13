@@ -61,8 +61,10 @@ int main(int argc, char *argv[])
     p.addVersionOption();
 
     p.addPositionalArgument("jsonfile","JSON file describing the menu");
-    QCommandLineOption nameOption("name","Give this menu a name to be remotely activated","name");
-    QCommandLineOption showOption("show","Remotely activate a named menu","name");
+    QCommandLineOption nameOption(QStringList() << "n" << "name",
+                                  "Give this menu a name to be remotely activated","name");
+    QCommandLineOption showOption(QStringList() << "s" << "show",
+                                  "Remotely activate a named menu","name");
 
     p.addOption(nameOption);
     p.addOption(showOption);

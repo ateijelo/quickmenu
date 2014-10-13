@@ -41,6 +41,7 @@ SUCH DAMAGE.
 #include <QFileInfo>
 #include <QDir>
 #include <QTimer>
+#include <QScreen>
 
 #include "quickmenu.h"
 
@@ -57,6 +58,8 @@ QuickMenu::QuickMenu(QString jsonPath, QObject *parent) :
 
     watcher.addPath(jsonPath);
     connect(&watcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged()));
+    connect(&icon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            this,SLOT(showMenuAtMouse()));
 }
 
 QJsonDocument QuickMenu::readJsonFile()
@@ -145,7 +148,27 @@ void QuickMenu::fileChanged()
 
 void QuickMenu::newConnection()
 {
-    icon.contextMenu()->popup(icon.geometry().topLeft());
+    showMenuAtIcon();
+}
+
+void QuickMenu::showMenuAtIcon()
+{
+    qDebug() << icon.geometry().topLeft();
+    //icon.contextMenu()->popup(icon.geometry().topLeft());
+    int top = icon.geometry().top();
+    if (top > (qApp->primaryScreen()->size().height() / 2))
+    {
+        top -= rootMenu.sizeHint().height();
+    }
+    int left = icon.geometry().left();
+    qDebug() << qApp->primaryScreen()->size();
+    icon.contextMenu()->popup(QPoint(left,top));
+}
+
+void QuickMenu::showMenuAtMouse()
+{
+    qDebug() << QCursor::pos();
+    icon.contextMenu()->popup(QCursor::pos());
 }
 
 void QuickMenu::addMenu(QMenu *menu, const QJsonObject &obj)

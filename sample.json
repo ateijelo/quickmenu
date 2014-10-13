@@ -7,7 +7,7 @@
      To describe a menu, just mimic the examples below. A menu is an array of
      entries. An entry is an object that has an optional icons and label.
 
-     An ampersand (&) in a label with underline the next letter in the
+     An ampersand (&) in a label will underline the next letter in the
      menu entry and work as a keyboard shortcut.
 
      Omitting the label is possible, the entry will look empty, but
@@ -30,7 +30,7 @@
     {
       "icon": "restart.png",
       "label": "&Restart",
-      "action": "kdesudo restart"
+      "action": "gksudo restart"
     },
     {
       "icon": "proxies.png",

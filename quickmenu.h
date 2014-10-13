@@ -57,6 +57,8 @@ class QuickMenu : public QObject
         void showError(const QString& title, const QString& msg);
         void fileChanged();
         void newConnection();
+        void showMenuAtIcon();
+        void showMenuAtMouse();
 
     private:
         QJsonDocument readJsonFile();
