@@ -20,12 +20,12 @@ Remote Activation
 If you want to have a global keyboard shortcut that brings up a QuickMenu, you
 can give the menu a name with:
 
-  quickmenu --name=menu1 menu1.json
+    quickmenu --name=menu1 menu1.json
   
 and then create a keyboard combination in your desktop environment that calls
 the following:
 
-  quickmenu --show=menu1
+    quickmenu --show=menu1
 
 License
 -------
