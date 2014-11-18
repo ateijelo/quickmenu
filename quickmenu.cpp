@@ -125,13 +125,17 @@ void QuickMenu::buildMenu()
         {
             icon.setIcon(rootMenu.icon());
         }
+
+        if (!rootObj.value("hide-quit").toBool())
+        {
+            rootMenu.addAction("Quit",qApp,SLOT(quit()));
+        }
     }
     else
     {
         icon.setIcon(QIcon(":/default-warning.png"));
     }
 
-    rootMenu.addAction("Quit",qApp,SLOT(quit()));
 }
 
 void QuickMenu::actionTriggered()
