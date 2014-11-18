@@ -230,10 +230,10 @@ void QuickMenu::addMenu(QMenu *menu, const QJsonObject &obj)
 
     menu->setIcon(loadIcon(obj));
 
-    if (obj.contains("shortcut"))
-    {
-        menu->menuAction()->setShortcut(QKeySequence(obj.value("shortcut").toString()));
-    }
+//    if (obj.contains("shortcut"))
+//    {
+    //        menu->menuAction()->setShortcut(QKeySequence(obj.value("shortcut").toString()));
+//    }
 
     QJsonArray entries = obj.value("menu").toArray();
     foreach (QJsonValue e, entries)
