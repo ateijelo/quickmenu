@@ -24,6 +24,8 @@ SOFTWARE.
 
 */
 
+//#define QT_NO_DEBUG_OUTPUT
+
 #include <QtDebug>
 #include <QFile>
 #include <QAction>
