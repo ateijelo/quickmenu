@@ -47,12 +47,23 @@ void QuickMenu::show()
 }
 
 QuickMenu::QuickMenu(QString jsonPath, QObject *parent) :
-    QObject(parent), jsonPath(jsonPath)
+    QObject(parent), jsonPath(jsonPath), creationCheckInterval(100)
 {
-    loadRootMenu();
+    // We've just started
+    buildMenu();
+    if (!QFile::exists(jsonPath))
+    {
+        fileExisted = false;
+        waitForCreation();
+    }
+    else
+    {
+        fileExisted = true;
+        startWatching();
+    }
+
     icon.setContextMenu(&rootMenu);
 
-    watcher.addPath(jsonPath);
     connect(&watcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged()));
     connect(&icon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this,SLOT(showMenuAtMouse()));
@@ -88,8 +99,9 @@ QJsonDocument QuickMenu::readJsonFile()
     return rootDoc;
 }
 
-void QuickMenu::loadRootMenu()
+void QuickMenu::buildMenu()
 {
+    qDebug() << "building menu";
     rootMenu.clear();
     foreach (QMenu *m, subMenus)
     {
@@ -98,6 +110,7 @@ void QuickMenu::loadRootMenu()
     subMenus.clear();
 
     auto rootDoc = readJsonFile();
+    qDebug() << "rootDoc is null?" << rootDoc.isNull();
 
     if (!(rootDoc.isNull()))
     {
@@ -137,9 +150,49 @@ void QuickMenu::showError(const QString &title, const QString &msg)
     icon.showMessage(title, msg);
 }
 
+void QuickMenu::startWatching()
+{
+    watcher.addPath(jsonPath);
+}
+
+void QuickMenu::waitForCreation()
+{
+    if (!QFile::exists(jsonPath))
+    {
+        qDebug() << "path" << jsonPath << "doesn't exist";
+        QTimer::singleShot(creationCheckInterval, this, SLOT(waitForCreation()));
+        creationCheckInterval = qMin(creationCheckInterval * 2, 1000);
+        if (fileExisted)
+        {
+            buildMenu(); // The file disappeared, reflect it in the menu
+            fileExisted = false;
+        }
+    }
+    else
+    {
+        buildMenu();
+        fileExisted = true;
+        startWatching();
+    }
+}
+
 void QuickMenu::fileChanged()
 {
-    loadRootMenu();
+    qDebug() << "fileChanged";
+    if (!watcher.files().contains(jsonPath))
+    {
+        qDebug() << "watch list didn't contain" << jsonPath;
+        creationCheckInterval = 100;
+        // We'll give the file 100ms to reappear before changing the
+        // icon to a warning, in case it was just overwritten, or moved.
+        // After that, the menu will reflect the error, and QuickMenu
+        // will start checking regularly for the file to reappear.
+        QTimer::singleShot(creationCheckInterval, this, SLOT(waitForCreation()));
+    }
+    else
+    {
+        buildMenu();
+    }
 }
 
 void QuickMenu::newConnection()

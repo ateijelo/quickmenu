@@ -46,18 +46,20 @@ class QuickMenu : public QObject
         void listenOn(const QString& name);
         void show();
 
-    private slots:
+private slots:
         void actionTriggered();
         void showError(const QString& title, const QString& msg);
         void fileChanged();
         void newConnection();
         void showMenuAtIcon();
         void showMenuAtMouse();
+        void startWatching();
+        void waitForCreation();
 
     private:
         QJsonDocument readJsonFile();
         void addMenu(QMenu *menu, const QJsonObject& obj);
-        void loadRootMenu();
+        void buildMenu();
         QIcon loadIcon(const QJsonObject& obj);
         std::pair<int, int> position(const QByteArray& data, const QJsonParseError& parseError);
 
@@ -68,7 +70,8 @@ class QuickMenu : public QObject
         QSet<QMenu *> subMenus; // QMenu::clear doesn't delete submenus, I keep track of them here
                                 // to delete them myself on reload
         QLocalServer *server;
-
+        int creationCheckInterval;
+        bool fileExisted;
 };
 
 #endif // QUICKMENU_H
