@@ -66,7 +66,7 @@ QuickMenu::QuickMenu(QString jsonPath, QObject *parent) :
 
     connect(&watcher,SIGNAL(fileChanged(QString)),this,SLOT(fileChanged()));
     connect(&icon,SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this,SLOT(showMenuAtMouse()));
+            this,SLOT(showMenuAtIcon()));
 }
 
 QJsonDocument QuickMenu::readJsonFile()
