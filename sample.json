@@ -19,8 +19,12 @@
      working directory.
 
      If the 'icon' key is ommitted in the root menu, a default will be used.
+
+     By default, the root menu will have a Quit entry. If you want to hide
+     it, add a hide-quit key with true as value in the root menu.
   ",
   "icon": "icon.png",
+  "hide-quit": false,
   "menu": [
     {
       "icon": "poweroff.png",
